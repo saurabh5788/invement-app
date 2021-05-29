@@ -1,26 +1,36 @@
 package com.customer.investment.investmentapp.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class InvestmentAccount {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@Column(name = "investment_account_id")
+	private int investmentAccountId;
+	
+	@ManyToOne
+	private UserDetails userDetails;
+	
+	@Column(name = "account_number")
 	private String accountNumber;
+	
+	@Column(name = "amount")
 	private double amount;
 
-	// private User user;
-	public int getId() {
-		return id;
+
+	public UserDetails getUserDetails() {
+		return userDetails;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setUserDetails(UserDetails userDetails) {
+		this.userDetails = userDetails;
 	}
 
 	public String getAccountNumber() {
