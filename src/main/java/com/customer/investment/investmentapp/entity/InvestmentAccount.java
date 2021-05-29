@@ -23,7 +23,15 @@ public class InvestmentAccount {
 	
 	@Column(name = "amount")
 	private double amount;
+	
+	public InvestmentAccount(){}
 
+	public InvestmentAccount(UserDetails userDetails,
+			String accountNumber, double amount) {
+		this.userDetails = userDetails;
+		this.accountNumber = accountNumber;
+		this.amount = amount;
+	}
 
 	public UserDetails getUserDetails() {
 		return userDetails;

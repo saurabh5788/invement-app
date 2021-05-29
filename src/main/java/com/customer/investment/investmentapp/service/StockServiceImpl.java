@@ -62,9 +62,12 @@ public class StockServiceImpl implements StockService {
 	@Override
 	@Transactional
 	public boolean placeStockOrder(OrderStockRequestDTO orderRequest){
-		boolean isOrderSuccess = false;
 		int currentQuanitytInHolding = 0;
+		double pricePerShare = fetchCurrentStockPrice(orderRequest.getStockSymbol());
+		
 		InvestmentAccount investmentAccount = investmentAccountRepository.getById(orderRequest.getAccountId());
+		double accountNeeded = pricePerShare*orderRequest.getNumberOfStock();
+		investmentAccount.setAmount(investmentAccount.getAmount()-accountNeeded);
 		
 		Optional<StockHolding> shOptional = stockHoldingRepository.findByStockSymbol(orderRequest.getStockSymbol());
 		StockHolding sh = null;
@@ -75,27 +78,20 @@ public class StockServiceImpl implements StockService {
 		else{			
 			sh = new StockHolding();
 			sh.setStockSymbol(orderRequest.getStockSymbol());
-			sh.setInvestmentAccount(investmentAccount);			
+			sh.setInvestmentAccount(investmentAccount);	
+			stockHoldingRepository.save(sh);
 		}
 		currentQuanitytInHolding+=orderRequest.getNumberOfStock();
 		sh.setQuantity(currentQuanitytInHolding);
-		stockHoldingRepository.save(sh);
 		
 		Order newOrder = new Order(); 
 		newOrder.setQuantity(orderRequest.getNumberOfStock());
-		double pricePerShare = fetchCurrentStockPrice(orderRequest.getStockSymbol());
+		
 		newOrder.setStockPrice(pricePerShare);
 		newOrder.setStockSymbol(orderRequest.getStockSymbol());
 
 		newOrder.setInvestmentAccount(investmentAccount);
 		orderRepository.save(newOrder);
-		
-		double accountDeducted = pricePerShare*orderRequest.getNumberOfStock();
-		investmentAccount.setAmount(investmentAccount.getAmount()-accountDeducted);
-		investmentAccountRepository.save(investmentAccount);
-		
-		isOrderSuccess = true;
-		return isOrderSuccess;
+		return true;
 	}
-
 }
