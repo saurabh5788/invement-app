@@ -9,20 +9,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "order_details")
 public class Order {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "order_id")
 	private int orderId;
+			
 	@Column(name = "stock_symbol")
 	private String stockSymbol;
+	
 	@Column(name = "quantity")
 	private int quantity;
+	
 	@Column(name = "stock_price")
 	private double stockPrice;
+	
 	@Column(name = "order_date")
 	private LocalDate orderDate;
 
