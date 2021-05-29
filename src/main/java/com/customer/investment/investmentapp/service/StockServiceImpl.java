@@ -81,12 +81,18 @@ public class StockServiceImpl implements StockService {
 		sh.setQuantity(currentQuanitytInHolding);
 		stockHoldingRepository.save(sh);
 		
-		/*Order newOrder = new Order(); 
+		Order newOrder = new Order(); 
 		newOrder.setQuantity(orderRequest.getNumberOfStock());
-		newOrder.setStockPrice(fetchCurrentStockPrice(orderRequest.getStockSymbol()));
+		double pricePerShare = fetchCurrentStockPrice(orderRequest.getStockSymbol());
+		newOrder.setStockPrice(pricePerShare);
 		newOrder.setStockSymbol(orderRequest.getStockSymbol());
 		newOrder.setInvestmentAccount(investmentAccount);
-		orderRepository.save(newOrder);*/
+		orderRepository.save(newOrder);
+		
+		double accountDeducted = pricePerShare*orderRequest.getNumberOfStock();
+		investmentAccount.setAmount(investmentAccount.getAmount()-accountDeducted);
+		investmentAccountRepository.save(investmentAccount);
+		
 		isOrderSuccess = true;
 		return isOrderSuccess;
 	}
