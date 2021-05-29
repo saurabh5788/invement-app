@@ -1,47 +1,38 @@
 package com.customer.investment.investmentapp.entity;
 
-import java.time.LocalDate;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "order_details")
-public class Order {
+@Table(name = "stock_holding")
+public class StockHolding implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "order_id")
-	private int orderId;
-			
+	@Column(name = "holding_id")
+	private int holdindId;
+	
 	@Column(name = "stock_symbol")
 	private String stockSymbol;
 	
 	@Column(name = "quantity")
 	private int quantity;
 	
-	@Column(name = "stock_price")
-	private double stockPrice;
-	
-	@Column(name = "order_date")
-	private LocalDate orderDate;
-
 	@ManyToOne
-	@JoinColumn(name = "investment_account_id")
 	private InvestmentAccount investmentAccount;
 
-	public int getOrderId() {
-		return orderId;
+	public int getHoldindId() {
+		return holdindId;
 	}
 
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
+	public void setHoldindId(int holdindId) {
+		this.holdindId = holdindId;
 	}
 
 	public String getStockSymbol() {
@@ -60,22 +51,6 @@ public class Order {
 		this.quantity = quantity;
 	}
 
-	public double getStockPrice() {
-		return stockPrice;
-	}
-
-	public void setStockPrice(double stockPrice) {
-		this.stockPrice = stockPrice;
-	}
-
-	public LocalDate getOrderDate() {
-		return orderDate;
-	}
-
-	public void setOrderDate(LocalDate orderDate) {
-		this.orderDate = orderDate;
-	}
-
 	public InvestmentAccount getInvestmentAccount() {
 		return investmentAccount;
 	}
@@ -83,5 +58,4 @@ public class Order {
 	public void setInvestmentAccount(InvestmentAccount investmentAccount) {
 		this.investmentAccount = investmentAccount;
 	}
-
 }
