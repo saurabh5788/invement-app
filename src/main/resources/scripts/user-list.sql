@@ -1,1 +1,2 @@
-INSERT INTO user (id, name ,username, password) values (1,'Saurabh Singh', 'saurabh.singh5788@gmail.com', '$argon2id$v=19$m=1024,t=10,p=1$U0rO2+u74QOrCecuR9t64A$/vKJtCJjbUkUlYizIKoVvhGDDPW5l9sjIxj/60xhEgA');
+INSERT INTO user_details (id, login_id ,password, name) values (1,'saurabh.singh5788@gmail.com','saurabh','Saurabh Singh');
+INSERT INTO user_details (id, login_id ,password, name) values (2,'skatkadeofficial@gmail.com','shankar','Shankar');
