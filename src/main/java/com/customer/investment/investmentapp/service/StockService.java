@@ -13,6 +13,6 @@ public interface StockService {
 	 * @return
 	 * @throws Exception
 	 */
-	Double getStockPrice(String stockSymbol) throws Exception;
+	Double fetchCurrentStockPrice(String stockSymbol) throws Exception;
 
 }
