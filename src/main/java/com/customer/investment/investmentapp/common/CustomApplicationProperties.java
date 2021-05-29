@@ -9,7 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @PropertySource("classpath:custom.properties")
-@ConfigurationProperties(prefix = "jwt")
+@ConfigurationProperties(prefix = "custom")
 public class CustomApplicationProperties {
 	private Map<String, String> user;
 	private Map<String, String> stock;
