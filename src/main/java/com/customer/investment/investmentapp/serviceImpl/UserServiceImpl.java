@@ -9,14 +9,12 @@ import com.customer.investment.investmentapp.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * @author Shankar, , , ,
@@ -55,6 +53,8 @@ public class UserServiceImpl implements UserService {
                 }
                log.info("Mapped account entity values to InvestmentAccountResponseDTO");
                return userInvestmentAccountsList;
+           }else{
+               throw new EntityNotFoundException();
            }
         }catch (Exception e){
             log.error(e.getMessage());

@@ -33,7 +33,7 @@ public class UserController {
     @GetMapping("/{userId}/accounts")
     public ResponseEntity<?> getUserAccounts(@PathVariable Integer userId){
         log.info("Inside method getUserAccounts for userId : {} , of UserController Class" , userId);
-        if(!userService.userExists(userId) || userId != null || userId <1 ){
+        if( userId == null || userId <1 || !userService.userExists(userId) ){
             log.info("Request parameter invalid or user does not exist with userId! : {} ", userId);
             return ResponseEntity.badRequest().body(new ErrorResponseDTO("Malformed request", HttpStatus.BAD_REQUEST.value()));
         }

@@ -1,37 +1,31 @@
 package com.customer.investment.investmentapp.controller;
-
-
-import com.customer.investment.investmentapp.dtos.AccountDetailsResponseDTO;
-import com.customer.investment.investmentapp.service.UserService;
-import org.junit.jupiter.api.Assertions;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
-@WebMvcTest(value = UserController.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class UserControllerTest {
 
-
     @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    private UserService userService;
+    UserController userController;
 
     @Test
     public void whenUserIdIsPassedThenReturnTheListOfAccounts(){
-        List<AccountDetailsResponseDTO> accountDetails = new ArrayList<>();
-        //accountDetails.add(new AccountDetailsResponseDTO("1234AC", 5140.85));
-        //accountDetails.add(new AccountDetailsResponseDTO("9858AC", 3000));
-
-        Assertions.assertEquals(0, userService.getUserAccounts(1).size());
+        ResponseEntity accountDetails = userController.getUserAccounts(1);
+        Assert.assertNotNull(accountDetails.getBody() != null);
     }
+
+    @Test
+    public void whenUserIdIsNullThenThrowReturnBadRequest(){
+        ResponseEntity accountDetails = userController.getUserAccounts(null);
+        Assert.assertTrue(accountDetails.getStatusCode().is4xxClientError());
+    }
+
 
 
 

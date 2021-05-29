@@ -1,16 +1,21 @@
 package com.customer.investment.investmentapp.service;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.customer.investment.investmentapp.common.CustomApplicationProperties;
 import com.customer.investment.investmentapp.dtos.OrderStockRequestDTO;
 import com.customer.investment.investmentapp.entity.InvestmentAccount;
 import com.customer.investment.investmentapp.entity.Order;
+import com.customer.investment.investmentapp.entity.StockHolding;
 import com.customer.investment.investmentapp.exception.StockServiceException;
+import com.customer.investment.investmentapp.repository.InvestmentAccountRepository;
 import com.customer.investment.investmentapp.repository.OrderRepository;
+import com.customer.investment.investmentapp.repository.StockHoldingRepository;
 
 /**
  * Implementation of Stock Service.
@@ -24,13 +29,20 @@ public class StockServiceImpl implements StockService {
 	private Map<String, Double> stockPriceMap;
 	private Map<String, String> stockProperties;
 	private OrderRepository orderRepository;
+	private StockHoldingRepository stockHoldingRepository;
+	private InvestmentAccountRepository investmentAccountRepository;
 
 	@Autowired
 	public StockServiceImpl(Map<String, Double> stockPriceMap,
-			CustomApplicationProperties customApplicationProperties, OrderRepository orderRepository) {
+			CustomApplicationProperties customApplicationProperties,
+			OrderRepository orderRepository,
+			StockHoldingRepository stockHoldingRepository,
+			InvestmentAccountRepository investmentAccountRepository) {
 		this.stockPriceMap = stockPriceMap;
 		this.stockProperties = customApplicationProperties.getStock();
 		this.orderRepository = orderRepository;
+		this.stockHoldingRepository = stockHoldingRepository;
+		this.investmentAccountRepository = investmentAccountRepository;
 	}
 
 	/*
@@ -48,16 +60,41 @@ public class StockServiceImpl implements StockService {
 	}
 	
 	@Override
+	@Transactional
 	public boolean placeStockOrder(OrderStockRequestDTO orderRequest){
 		boolean isOrderSuccess = false;
+		int currentQuanitytInHolding = 0;
+		InvestmentAccount investmentAccount = investmentAccountRepository.getById(orderRequest.getAccountId());
+		
+		Optional<StockHolding> shOptional = stockHoldingRepository.findByStockSymbol(orderRequest.getStockSymbol());
+		StockHolding sh = null;
+		if(shOptional.isPresent()){
+			sh = shOptional.get();
+			currentQuanitytInHolding = sh.getQuantity();
+		}
+		else{			
+			sh = new StockHolding();
+			sh.setStockSymbol(orderRequest.getStockSymbol());
+			sh.setInvestmentAccount(investmentAccount);			
+		}
+		currentQuanitytInHolding+=orderRequest.getNumberOfStock();
+		sh.setQuantity(currentQuanitytInHolding);
+		stockHoldingRepository.save(sh);
+		
 		Order newOrder = new Order(); 
 		newOrder.setQuantity(orderRequest.getNumberOfStock());
-		newOrder.setStockPrice(fetchCurrentStockPrice(orderRequest.getStockSymbol()));
+		double pricePerShare = fetchCurrentStockPrice(orderRequest.getStockSymbol());
+		newOrder.setStockPrice(pricePerShare);
 		newOrder.setStockSymbol(orderRequest.getStockSymbol());
 
-		InvestmentAccount investmentAccount = null;
 		newOrder.setInvestmentAccount(investmentAccount);
 		orderRepository.save(newOrder);
+		
+		double accountDeducted = pricePerShare*orderRequest.getNumberOfStock();
+		investmentAccount.setAmount(investmentAccount.getAmount()-accountDeducted);
+		investmentAccountRepository.save(investmentAccount);
+		
+		isOrderSuccess = true;
 		return isOrderSuccess;
 	}
 

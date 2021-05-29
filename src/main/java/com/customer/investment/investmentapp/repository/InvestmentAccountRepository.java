@@ -10,8 +10,13 @@ import java.util.List;
 @Repository
 public interface InvestmentAccountRepository extends JpaRepository<InvestmentAccount, Integer> {
 
+    /**
+     * @param userId
+     * @return list of investment accounts for a user
+     */
 
     @Query("select ua from InvestmentAccount ua where ua.userDetails.userId=?1")
+
     List<InvestmentAccount> getUserAccountByUserId(Integer userId);
 
 }

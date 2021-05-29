@@ -1,3 +1,4 @@
+/*
 package com.customer.investment.investmentapp.controller;
 
 import java.util.Map;
@@ -19,11 +20,11 @@ import com.customer.investment.investmentapp.common.CustomApplicationProperties;
 import com.customer.investment.investmentapp.dtos.OrderStockRequestDTO;
 import com.customer.investment.investmentapp.service.StockService;
 
-*
- * API Controller for Order Details.
- * 
+*/
+/**
+ * API Controller for Order Details
  * @author Saurabh Singh
-
+ *//*
 
 @RestController
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -54,3 +55,4 @@ public class OrderController {
 					.build();
 	}
 }
+*/

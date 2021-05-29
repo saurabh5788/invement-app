@@ -2,19 +2,19 @@ package com.customer.investment.investmentapp.dtos;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
+//import javax.validation.constraints.NotBlank;
+//import javax.validation.constraints.Positive;
 
 public class OrderStockRequestDTO implements Serializable {
 
 
 
 	private static final long serialVersionUID = 1L;
-	@Positive
+//	@Positive
 	private int accountId;
-	@NotBlank
+//	@NotBlank
 	private String stockSymbol;
-	@Positive
+//	@Positive
 	private int numberOfStock;
 	public int getAccountId() {
 		return accountId;
