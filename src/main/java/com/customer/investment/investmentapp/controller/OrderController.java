@@ -19,19 +19,17 @@ import com.customer.investment.investmentapp.dtos.OrderStockRequestDTO;
  * @author Saurabh Singh
  */
 @RestController
-@RequestMapping(produces = 
-		MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 @Validated
 public class OrderController {
-	
 
 	@Autowired
 	public OrderController() {
 	}
 
-	@PostMapping(value = { "/add", "/add/" }, consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<Void> updateStateCase(
+	@PostMapping(value = "/users/{userid}/{accountid}/orders", consumes = 
+			MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Void> placeOrder(
 			@Valid @RequestBody OrderStockRequestDTO orderStockRequestDTO) {
 		return null;
 	}
