@@ -10,6 +10,7 @@ public class LoginRequestDto {
 	@NotNull(message = "Login Id should not be null")
 	@NotEmpty(message = "Login Id should not be empty")
 	private String loginId;
+	
 	@NotBlank(message = "Password should not be blank")
 	@NotNull(message = "Password should not be null")
 	@NotEmpty(message = "Password should not be empty")
@@ -31,4 +32,17 @@ public class LoginRequestDto {
 		this.password = password;
 	}
 
+	/**
+	 * @param loginId
+	 * @param password
+	 */
+	public LoginRequestDto(
+			@NotBlank(message = "Login Id should not be blank") @NotNull(message = "Login Id should not be null") @NotEmpty(message = "Login Id should not be empty") String loginId,
+			@NotBlank(message = "Password should not be blank") @NotNull(message = "Password should not be null") @NotEmpty(message = "Password should not be empty") String password) {
+		super();
+		this.loginId = loginId;
+		this.password = password;
+	}
+	
+	
 }
