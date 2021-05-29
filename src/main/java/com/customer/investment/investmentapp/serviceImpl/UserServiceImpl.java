@@ -1,6 +1,9 @@
 package com.customer.investment.investmentapp.serviceImpl;
 
 import com.customer.investment.investmentapp.dtos.AccountDetailsResponseDTO;
+import com.customer.investment.investmentapp.entity.InvestmentAccount;
+import com.customer.investment.investmentapp.entity.UserDetails;
+import com.customer.investment.investmentapp.repository.InvestmentAccountRepository;
 import com.customer.investment.investmentapp.repository.UserRepository;
 import com.customer.investment.investmentapp.service.UserService;
 import org.slf4j.Logger;
@@ -9,7 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author Shankar, , , ,
@@ -23,7 +30,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-
+    @Autowired
+    private InvestmentAccountRepository investmentAccountRepository;
 
     /**
      *
@@ -33,14 +41,25 @@ public class UserServiceImpl implements UserService {
      * against the usedId would be returned
      */
     @Override
-    public List<AccountDetailsResponseDTO> getUserAccounts(int userId) {
+    public List<AccountDetailsResponseDTO> getUserAccounts(Integer userId) {
         log.info("Inside method getUSerAccounts of UserServiceImpl class with userId : {} ", userId);
+        List<AccountDetailsResponseDTO> userInvestmentAccountsList = new ArrayList<>();
         try {
-
+            List<InvestmentAccount> userAccounts =  investmentAccountRepository.getUserAccountByUserId(userId);
+           if(!userAccounts.isEmpty()) {
+                for (InvestmentAccount account:userAccounts){
+                    AccountDetailsResponseDTO accountDetailsResponseDTO = new AccountDetailsResponseDTO();
+                    accountDetailsResponseDTO.setAccountNumber(account.getAccountNumber());
+                    accountDetailsResponseDTO.setBalance(account.getAmount());
+                    userInvestmentAccountsList.add(accountDetailsResponseDTO);
+                }
+               log.info("Mapped account entity values to InvestmentAccountResponseDTO");
+               return userInvestmentAccountsList;
+           }
         }catch (Exception e){
-
+            log.error(e.getMessage());
         }
-        return null;
+        return userInvestmentAccountsList;
     }
 
     /**
@@ -49,6 +68,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean userExists(Integer userId) {
-        return userRepository.existsById(userId);
+        log.info("Inside method userExist of class UserServiceImpl with userID : {} ",userId);
+        Optional<UserDetails> userDetails = userRepository.findById(userId);
+        return userDetails.isPresent();
     }
 }

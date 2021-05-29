@@ -6,11 +6,6 @@ package com.customer.investment.investmentapp.dtos;
  */
 public class AccountDetailsResponseDTO {
 
-    public AccountDetailsResponseDTO(String accountNumber, double balance) {
-        this.accountNumber = accountNumber;
-        this.balance = balance;
-    }
-
     private String accountNumber;
     private double balance;
 

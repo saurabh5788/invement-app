@@ -54,7 +54,7 @@ public class StockServiceImpl implements StockService {
 		newOrder.setQuantity(orderRequest.getNumberOfStock());
 		newOrder.setStockPrice(fetchCurrentStockPrice(orderRequest.getStockSymbol()));
 		newOrder.setStockSymbol(orderRequest.getStockSymbol());
-		
+
 		InvestmentAccount investmentAccount = null;
 		newOrder.setInvestmentAccount(investmentAccount);
 		orderRepository.save(newOrder);

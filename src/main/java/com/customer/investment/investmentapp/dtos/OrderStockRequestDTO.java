@@ -7,9 +7,8 @@ import javax.validation.constraints.Positive;
 
 public class OrderStockRequestDTO implements Serializable {
 
-	/**
-	 * 
-	 */
+
+
 	private static final long serialVersionUID = 1L;
 	@Positive
 	private int accountId;

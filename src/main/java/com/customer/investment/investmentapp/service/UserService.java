@@ -8,7 +8,7 @@ import java.util.List;
 @Component
 public interface UserService {
 
-    List<AccountDetailsResponseDTO> getUserAccounts(int userId);
+    List<AccountDetailsResponseDTO> getUserAccounts(Integer userId);
 
     boolean userExists( Integer userId);
 

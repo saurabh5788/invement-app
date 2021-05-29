@@ -27,8 +27,8 @@ public class UserControllerTest {
     @Test
     public void whenUserIdIsPassedThenReturnTheListOfAccounts(){
         List<AccountDetailsResponseDTO> accountDetails = new ArrayList<>();
-        accountDetails.add(new AccountDetailsResponseDTO("1234AC", 5140.85));
-        accountDetails.add(new AccountDetailsResponseDTO("9858AC", 3000));
+        //accountDetails.add(new AccountDetailsResponseDTO("1234AC", 5140.85));
+        //accountDetails.add(new AccountDetailsResponseDTO("9858AC", 3000));
 
         Assertions.assertEquals(0, userService.getUserAccounts(1).size());
     }
