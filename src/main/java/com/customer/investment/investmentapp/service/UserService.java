@@ -10,4 +10,6 @@ public interface UserService {
 
     List<AccountDetailsResponseDTO> getUserAccounts(int userId);
 
+    boolean userExists( Integer userId);
+
 }

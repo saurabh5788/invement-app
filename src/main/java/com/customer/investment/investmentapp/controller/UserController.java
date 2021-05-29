@@ -24,8 +24,12 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/{userId}/accounts")
-    public ResponseEntity<?> getUserAccounts(@NonNull @RequestParam("userId") int userId){
+    public ResponseEntity<?> getUserAccounts(@NonNull @RequestParam("userId") Integer userId){
+        if(userId != null || userId <1 || !userService.userExists(userId)){
+
+        }
         List<AccountDetailsResponseDTO> accountList =  userService.getUserAccounts(userId);
+
         return null;
     }
 
