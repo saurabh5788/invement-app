@@ -2,6 +2,7 @@ package com.customer.investment.investmentapp.entity;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,10 +15,15 @@ public class Order {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "order_id")
 	private int orderId;
+	@Column(name = "stock_symbol")
 	private String stockSymbol;
+	@Column(name = "quantity")
 	private int quantity;
+	@Column(name = "stock_price")
 	private double stockPrice;
+	@Column(name = "order_date")
 	private LocalDate orderDate;
 
 	@ManyToOne
