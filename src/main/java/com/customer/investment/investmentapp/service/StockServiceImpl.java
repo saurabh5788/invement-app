@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.customer.investment.investmentapp.common.CustomApplicationProperties;
+import com.customer.investment.investmentapp.dtos.OrderStockRequestDTO;
 import com.customer.investment.investmentapp.exception.StockServiceException;
 
 /**
@@ -39,6 +40,12 @@ public class StockServiceImpl implements StockService {
 		if (!stockPriceMap.containsKey(stockSymbol))
 			throw new StockServiceException(stockProperties.get("nostock"));
 		return stockPriceMap.get(stockSymbol);
+	}
+	
+	@Override
+	public boolean placeStockOrder(OrderStockRequestDTO orderRequest){
+		boolean isOrderSuccess = false;
+		return isOrderSuccess;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.customer.investment.investmentapp.service;
 
+import com.customer.investment.investmentapp.dtos.OrderStockRequestDTO;
+
 /**
  * Service Interface for Stock related functions.
  * 
@@ -14,5 +16,7 @@ public interface StockService {
 	 * @throws Exception
 	 */
 	Double fetchCurrentStockPrice(String stockSymbol) throws Exception;
+
+	boolean placeStockOrder(OrderStockRequestDTO orderRequest);
 
 }
